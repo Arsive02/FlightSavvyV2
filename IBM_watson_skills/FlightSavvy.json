@@ -1,0 +1,498 @@
+{
+    "intents": [
+      {
+        "intent": "baggage_allowance",
+        "examples": [
+          {
+            "text": "What is the maximum number of luggages I can carry in this Airline?"
+          }
+        ],
+        "description": "Checks maximum baggage allowance for an airline"
+      },
+      {
+        "intent": "best_flight_option",
+        "examples": [
+          {
+            "text": "I want to go to this place at this time, what would be my cheapest option?"
+          }
+        ],
+        "description": "Finds the cheapest flight option for a given time"
+      },
+      {
+        "intent": "cheapest_airline",
+        "examples": [
+          {
+            "text": "Tell me the cheapest airline."
+          },
+          {
+            "text": "Which airline provides the cheap fare from this place?"
+          }
+        ],
+        "description": "Finds the cheapest airline for a route"
+      },
+      {
+        "intent": "check_date",
+        "examples": [
+          {
+            "text": "What day is it?"
+          }
+        ],
+        "description": "Provides the current date"
+      },
+      {
+        "intent": "find_cheapest_ticket",
+        "examples": [
+          {
+            "text": "What is the best time to buy the cheapest ticket to this place?"
+          },
+          {
+            "text": "When should I book a cheap flight?"
+          }
+        ],
+        "description": "Finds the best time to book the cheapest ticket"
+      },
+      {
+        "intent": "greeting",
+        "examples": [
+          {
+            "text": "Hello"
+          },
+          {
+            "text": "Hey there"
+          },
+          {
+            "text": "Hi"
+          },
+          {
+            "text": "How are you?"
+          },
+          {
+            "text": "Yo"
+          }
+        ],
+        "description": "Handles user greetings"
+      },
+      {
+        "intent": "least_expensive_airline",
+        "examples": [
+          {
+            "text": "Which airline is less expensive?"
+          }
+        ],
+        "description": "Finds the least expensive airline"
+      },
+      {
+        "intent": "nonstop_flight",
+        "examples": [
+          {
+            "text": "Is this a nonstop flight?"
+          }
+        ],
+        "description": "Checks if the flight is nonstop"
+      },
+      {
+        "intent": "student_discount",
+        "examples": [
+          {
+            "text": "Do airlines offer student discounts?"
+          },
+          {
+            "text": "Is there a student discount?"
+          }
+        ],
+        "description": "Checks if airlines offer student discounts"
+      },
+      {
+        "intent": "weather_inquiry",
+        "examples": [
+          {
+            "text": "What is the weather in this place?"
+          }
+        ],
+        "description": "Checks the weather at a given location"
+      },
+      {
+        "intent": "book_flight",
+        "examples": [
+          {"text": "Book a flight to Paris"},
+          {"text": "I need to plan a trip to Tokyo"},
+          {"text": "Help me find flights to London"}
+        ],
+        "description": "Initiate flight booking"
+      },
+      {
+        "intent": "cancel_booking",
+        "examples": [
+          {"text": "I need to cancel my flight"},
+          {"text": "Cancel my reservation"},
+          {"text": "The trip is cancelled"}
+        ],
+        "description": "Cancel existing booking"
+      },
+      {
+        "intent": "flight_recommendations",
+        "examples": [
+          {"text": "Best time to buy tickets?"},
+          {"text": "Cheapest airline to Sydney?"},
+          {"text": "Recommend flights for August"}
+        ],
+        "description": "Request travel advice"
+      },
+      {
+        "intent": "General_About_You",
+        "examples": [
+          {"text": "What are you?"},
+          {"text": "Are you AI?"},
+          {"text": "Who created you?"}
+        ],
+        "description": "Assistant identity"
+      },
+      {
+        "intent": "General_Agent_Capabilities",
+        "examples": [
+          {"text": "What can you do?"},
+          {"text": "List your features"},
+          {"text": "How can you help?"}
+        ],
+        "description": "Service capabilities"
+      },
+      {
+        "intent": "General_Connect_to_Agent",
+        "examples": [
+          {"text": "Transfer me to a human"},
+          {"text": "I want a real agent"},
+          {"text": "Connect to support"}
+        ],
+        "description": "Human agent request"
+      },
+      {
+        "intent": "General_Security_Assurance",
+        "examples": [
+          {"text": "Is this secure?"},
+          {"text": "Protect my payment info?"},
+          {"text": "Safe to book here?"}
+        ],
+        "description": "Security concerns"
+      }
+    ],
+    "entities": [
+      {
+        "entity": "airline_name",
+        "values": [
+          {
+            "type": "synonyms",
+            "value": "American Airlines",
+            "synonyms": []
+          },
+          {
+            "type": "synonyms",
+            "value": "Delta",
+            "synonyms": []
+          },
+          {
+            "type": "synonyms",
+            "value": "Southwest",
+            "synonyms": []
+          },
+          {
+            "type": "synonyms",
+            "value": "United",
+            "synonyms": []
+          }
+        ],
+        "fuzzy_match": true
+      },
+      {
+        "entity": "destination",
+        "values": [
+          {"value": "Paris", "synonyms": ["CDG", "France"]},
+          {"value": "New York", "synonyms": ["JFK", "NYC"]},
+          {"value": "Tokyo", "synonyms": ["HND", "NRT"]}
+        ],
+        "fuzzy_match": true
+      },
+      {
+        "entity": "booking_class",
+        "values": [
+          {"value": "Economy", "synonyms": ["standard"]},
+          {"value": "Premium", "synonyms": ["plus"]},
+          {"value": "Business", "synonyms": ["executive"]}
+        ]
+      },
+      {
+        "entity": "booking_number",
+        "values": [
+          {
+            "type": "patterns",
+            "value": "flight_reference",
+            "patterns": ["[A-Z]{3}-\\d{6}"]
+          }
+        ],
+        "fuzzy_match": true
+      },
+      {
+        "entity": "payment_method",
+        "values": [
+          {"value": "Credit Card", "synonyms": ["Visa", "Mastercard"]},
+          {"value": "PayPal", "synonyms": ["Digital Wallet"]}
+        ]
+      }
+    ],
+    "metadata": {
+      "api_version": {
+        "major_version": "v2",
+        "minor_version": "2018-11-08"
+      }
+    },
+    "dialog_nodes": [
+      {
+        "type": "standard",
+        "title": "Welcome",
+        "output": {
+          "generic": [{
+            "values": [{"text": "✈️ Welcome to SkyTravel AI! How can I assist with your flight plans?"}],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }]
+        },
+        "conditions": "welcome",
+        "dialog_node": "node_1_1730000000001"
+      },
+      {
+        "type": "standard",
+        "title": "Greeting",
+        "output": {
+          "generic": [
+            {
+              "values": [
+                {
+                  "text": "Hey! I'm here to help you find cheap flights. How can I assist you?"
+                }
+              ],
+              "response_type": "text",
+              "selection_policy": "sequential"
+            }
+          ]
+        },
+        "conditions": "#greeting",
+        "dialog_node": "Welcome",
+        "previous_sibling": "node_1_1730000000001"
+      },
+      {
+        "type": "standard",
+        "title": "Booking Initiation",
+        "output": {
+          "generic": [{
+            "values": [{"text": "Let's find your perfect flight! Please share:\n- Destination\n- Travel dates\n- Passenger count"}],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }]
+        },
+        "conditions": "#book_flight",
+        "dialog_node": "node_2_1730000000002",
+        "previous_sibling": "Welcome"
+      },
+      {
+        "type": "standard",
+        "title": "Find Cheapest Ticket",
+        "output": {
+          "generic": [
+            {
+              "values": [
+                {
+                  "text": "The cheapest time to book flights is usually 6-8 weeks in advance. Would you like me to suggest airlines?"
+                }
+              ],
+              "response_type": "text",
+              "selection_policy": "sequential"
+            }
+          ]
+        },
+        "conditions": "#find_cheapest_ticket",
+        "dialog_node": "node_10_1742242531310",
+        "previous_sibling": "node_2_1730000000002"
+      },
+      {
+        "type": "standard",
+        "title": "Process Booking",
+        "output": {
+          "generic": [{
+            "values": [{"text": "Analyzing options for @destination...\n\n📅 Ideal booking window: 6-8 weeks pre-travel\n💰 Price estimate: $@price\n💺 Available classes: @booking_class"}],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }]
+        },
+        "conditions": "@destination && @booking_class",
+        "dialog_node": "node_3_1730000000003",
+        "parent": "node_2_1730000000002"
+      },
+      {
+        "type": "standard",
+        "title": "Student Discount",
+        "output": {
+          "generic": [
+            {
+              "values": [
+                {
+                  "text": "Yes! Airlines like Delta, American Airlines, and United offer student discounts through StudentUniverse."
+                }
+              ],
+              "response_type": "text",
+              "selection_policy": "sequential"
+            }
+          ]
+        },
+        "conditions": "#student_discount",
+        "dialog_node": "node_9_1742242616145",
+        "previous_sibling": "node_10_1742242531310"
+      },
+      {
+        "type": "standard",
+        "title": "Cheapest Airline",
+        "output": {
+          "generic": [
+            {
+              "values": [
+                {
+                  "text": "Budget airlines like Spirit, Frontier, and Southwest usually offer the lowest fares."
+                }
+              ],
+              "response_type": "text",
+              "selection_policy": "sequential"
+            }
+          ]
+        },
+        "conditions": "#cheapest_airline",
+        "dialog_node": "node_5_1742242702459",
+        "previous_sibling": "node_9_1742242616145"
+      },
+      {
+        "type": "standard",
+        "title": "Baggage Allowance",
+        "output": {
+          "generic": [
+            {
+              "values": [
+                {
+                  "text": "Most airlines allow 1 carry-on bag and 1 personal item. However, @airline_name typically allows up to 2 checked bags."
+                }
+              ],
+              "response_type": "text",
+              "selection_policy": "sequential"
+            }
+          ]
+        },
+        "conditions": "#baggage_allowance",
+        "dialog_node": "node_5_1742242731204",
+        "previous_sibling": "node_5_1742242702459"
+      },
+      {
+        "type": "standard",
+        "title": "Cancellation Flow",
+        "output": {
+          "generic": [{
+            "values": [{"text": "To cancel booking @booking_number:\n1. Verify identity\n2. Confirm cancellation\n3. Receive refund estimate"}],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }]
+        },
+        "conditions": "#cancel_booking @booking_number",
+        "dialog_node": "node_4_1730000000004",
+        "previous_sibling": "node_5_1742242731204"
+      },
+      {
+        "type": "standard",
+        "title": "Security Assurance",
+        "output": {
+          "generic": [{
+            "values": [{"text": "Your security is our priority:\n🔒 PCI-DSS compliant payments\n🔑 256-bit encryption\n🛡️ Fraud protection system"}],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }]
+        },
+        "conditions": "#General_Security_Assurance @payment_method",
+        "dialog_node": "node_5_1730000000005",
+        "previous_sibling": "node_4_1730000000004"
+      },
+      {
+        "type": "standard",
+        "title": "Human Transfer",
+        "output": {
+          "generic": [{
+            "values": [{"text": "Transferring you to a travel specialist...\n⏳ Average wait time: 2 minutes"}],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }]
+        },
+        "conditions": "#General_Connect_to_Agent",
+        "dialog_node": "node_6_1730000000006",
+        "previous_sibling": "node_5_1730000000005"
+      },
+      {
+        "type": "standard",
+        "title": "Capabilities Overview",
+        "output": {
+          "generic": [{
+            "values": [{"text": "I can help with:\n✅ Flight bookings\n✅ Price predictions\n✅ Cancellations\n✅ Travel advisories\n✅ Security assurance"}],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }]
+        },
+        "conditions": "#General_Agent_Capabilities",
+        "dialog_node": "node_7_1730000000007",
+        "previous_sibling": "node_6_1730000000006"
+      },
+      {
+        "type": "standard",
+        "title": "Anything else",
+        "output": {
+          "generic": [
+            {
+              "values": [
+                {
+                  "text": "I didn't understand. You can try rephrasing."
+                },
+                {
+                  "text": "Can you reword your statement? I'm not understanding."
+                },
+                {
+                  "text": "I didn't get your meaning."
+                }
+              ],
+              "response_type": "text",
+              "selection_policy": "sequential"
+            }
+          ]
+        },
+        "conditions": "anything_else",
+        "dialog_node": "Anything else",
+        "previous_sibling": "node_7_1730000000007",
+        "disambiguation_opt_out": true
+      }
+    ],
+    "counterexamples": [],
+    "system_settings": {
+      "off_topic": {
+        "enabled": true
+      },
+      "nlp": {"model": "latest"},
+      "disambiguation": {
+        "prompt": "Did you mean:",
+        "enabled": true,
+        "randomize": true,
+        "max_suggestions": 5,
+        "suggestion_text_policy": "title",
+        "none_of_the_above_prompt": "None of the above",
+        "use_connect_to_support_prompt": "Connect to support",
+        "single_answer_clarification_prompt": "Something else"
+      },
+      "human_agent_assist": {
+        "prompt": "Did you mean:"
+      },
+      "spelling_auto_correct": true
+    },
+    "learning_opt_out": false,
+    "language": "en",
+    "description": "Complete Flight Booking Assistant with Price Prediction",
+    "name": "FlightSavvy-AI-Assistant"
+  }
