@@ -259,7 +259,7 @@ def predict_best_time_to_buy_ticket(origin, destination, granularity="quarter",
         
         # Load the trained models
         try:
-            rf_model = joblib.load('flight_fare_rf_model.joblib')
+            rf_model = joblib.load('models/flight_fare_rf_model.joblib')
             print("Random Forest model loaded successfully")
         except Exception as e:
             print(f"Error loading Random Forest model: {e}")
@@ -267,7 +267,7 @@ def predict_best_time_to_buy_ticket(origin, destination, granularity="quarter",
         
         # Try to load time series model (optional)
         try:
-            ts_model = joblib.load('flight_fare_ts_model.joblib')
+            ts_model = joblib.load('models/flight_fare_ts_model.joblib')
             print("Time series model loaded successfully")
         except Exception as e:
             print(f"Time series model not available: {str(e)}")
