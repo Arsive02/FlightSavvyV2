@@ -12,7 +12,12 @@
         {"text": "When can I get the lowest prices for a flight?"},
         {"text": "What month should I book my vacation flight?"},
         {"text": "Looking for the optimal time to purchase airline tickets"},
-        {"text": "When are flights to Europe cheapest?"}
+        {"text": "When are flights to Europe cheapest?"},
+        {"text": "How far in advance should I book?"},
+        {"text": "Price forecast for flights"},
+        {"text": "Ticket price trends"},
+        {"text": "Should I book now or wait?"},
+        {"text": "Best flight deals for summer vacation"}
       ],
       "description": "User wants to find the best time to book flights"
     },
@@ -44,7 +49,12 @@
         {"text": "Which carrier has the best on-time record?"},
         {"text": "Are Spirit Airlines flights reliable?"},
         {"text": "Tell me about low cost carriers"},
-        {"text": "Which airline has the most legroom?"}
+        {"text": "Which airline has the most legroom?"},
+        {"text": "Business class options"},
+        {"text": "First class comparison"},
+        {"text": "Airline flight miles programs"},
+        {"text": "Airline alliances"},
+        {"text": "Which airline has the best rewards program?"}
       ],
       "description": "User is asking about airline information"
     },
@@ -60,7 +70,12 @@
         {"text": "Free baggage policy"},
         {"text": "Carry-on size restrictions"},
         {"text": "Overweight baggage fees"},
-        {"text": "How much luggage can I bring?"}
+        {"text": "How much luggage can I bring?"},
+        {"text": "Are there fees for checked bags?"},
+        {"text": "Maximum luggage dimensions"},
+        {"text": "Can I bring sports equipment?"},
+        {"text": "Pet carrier policies"},
+        {"text": "Musical instrument policies"}
       ],
       "description": "User is asking about baggage policies"
     },
@@ -81,6 +96,38 @@
       "description": "User is asking about student discounts"
     },
     {
+      "intent": "seasonal_trends",
+      "examples": [
+        {"text": "When is high season for flying?"},
+        {"text": "Are winter flights more expensive?"},
+        {"text": "What are the cheapest months to fly?"},
+        {"text": "Holiday season flight prices"},
+        {"text": "Summer vs winter airfare prices"},
+        {"text": "Peak travel seasons"},
+        {"text": "Off-peak flight pricing"},
+        {"text": "Seasonal flight trends"},
+        {"text": "When are flights to Florida cheapest?"},
+        {"text": "High vs low season for international travel"}
+      ],
+      "description": "User is asking about seasonal flight trends"
+    },
+    {
+      "intent": "flight_prediction_explanation",
+      "examples": [
+        {"text": "How do you predict flight prices?"},
+        {"text": "What data do you use for predictions?"},
+        {"text": "How accurate are your predictions?"},
+        {"text": "How does the flight prediction work?"},
+        {"text": "Do you use machine learning?"},
+        {"text": "What's the technology behind FlightSavvy?"},
+        {"text": "How can you predict future prices?"},
+        {"text": "Are predictions based on historical data?"},
+        {"text": "What factors affect your predictions?"},
+        {"text": "How often are your predictions updated?"}
+      ],
+      "description": "User is asking about how the flight predictions work"
+    },
+    {
       "intent": "help",
       "examples": [
         {"text": "What can you do?"},
@@ -95,6 +142,22 @@
         {"text": "Show me what you can do"}
       ],
       "description": "User is asking for help with the bot"
+    },
+    {
+      "intent": "reset_conversation",
+      "examples": [
+        {"text": "Start over"},
+        {"text": "Reset"},
+        {"text": "Can we start from the beginning?"},
+        {"text": "I want to search for a different flight"},
+        {"text": "New search"},
+        {"text": "Clear and start again"},
+        {"text": "Let's try a different route"},
+        {"text": "Change my search"},
+        {"text": "I want to look up something else"},
+        {"text": "Begin a new search"}
+      ],
+      "description": "User wants to reset the conversation and start over"
     },
     {
       "intent": "goodbye",
@@ -126,7 +189,17 @@
         {"type": "synonyms", "value": "Seattle", "synonyms": ["SEA", "Emerald City"]},
         {"type": "synonyms", "value": "Denver", "synonyms": ["DEN", "Mile High City"]},
         {"type": "synonyms", "value": "Boston", "synonyms": ["BOS", "Beantown"]},
-        {"type": "synonyms", "value": "Las Vegas", "synonyms": ["LAS", "Vegas", "Sin City"]}
+        {"type": "synonyms", "value": "Las Vegas", "synonyms": ["LAS", "Vegas", "Sin City"]},
+        {"type": "synonyms", "value": "Atlanta", "synonyms": ["ATL", "Hotlanta"]},
+        {"type": "synonyms", "value": "Austin", "synonyms": ["AUS", "ATX"]},
+        {"type": "synonyms", "value": "Phoenix", "synonyms": ["PHX", "Valley of the Sun"]},
+        {"type": "synonyms", "value": "Orlando", "synonyms": ["MCO", "Disney World"]},
+        {"type": "synonyms", "value": "Houston", "synonyms": ["IAH", "HOU", "Space City"]},
+        {"type": "synonyms", "value": "Philadelphia", "synonyms": ["PHL", "Philly"]},
+        {"type": "synonyms", "value": "San Diego", "synonyms": ["SAN"]},
+        {"type": "synonyms", "value": "Portland", "synonyms": ["PDX", "Rose City"]},
+        {"type": "synonyms", "value": "Washington DC", "synonyms": ["DCA", "IAD", "BWI", "Washington", "DC"]},
+        {"type": "synonyms", "value": "New Orleans", "synonyms": ["MSY", "NOLA", "Big Easy"]}
       ],
       "fuzzy_match": true
     },
@@ -158,7 +231,9 @@
         {"type": "synonyms", "value": "JetBlue", "synonyms": ["B6", "JetBlue Airways"]},
         {"type": "synonyms", "value": "Spirit", "synonyms": ["NK", "Spirit Airlines"]},
         {"type": "synonyms", "value": "Frontier", "synonyms": ["F9", "Frontier Airlines"]},
-        {"type": "synonyms", "value": "Alaska", "synonyms": ["AS", "Alaska Airlines"]}
+        {"type": "synonyms", "value": "Alaska", "synonyms": ["AS", "Alaska Airlines"]},
+        {"type": "synonyms", "value": "Allegiant", "synonyms": ["G4", "Allegiant Air"]},
+        {"type": "synonyms", "value": "Sun Country", "synonyms": ["SY", "Sun Country Airlines"]}
       ],
       "fuzzy_match": true
     },
@@ -175,10 +250,30 @@
     {
       "entity": "analysis_type",
       "values": [
-        {"type": "synonyms", "value": "monthly", "synonyms": ["month", "by month", "monthly analysis"]},
-        {"type": "synonyms", "value": "quarterly", "synonyms": ["quarter", "by quarter", "seasonal", "by season"]},
-        {"type": "synonyms", "value": "weekly", "synonyms": ["week", "by week", "week by week"]},
-        {"type": "synonyms", "value": "daily", "synonyms": ["day by day", "by day", "date", "by date"]}
+        {"type": "synonyms", "value": "month", "synonyms": ["monthly", "by month", "monthly analysis"]},
+        {"type": "synonyms", "value": "quarter", "synonyms": ["quarterly", "by quarter", "seasonal", "by season"]},
+        {"type": "synonyms", "value": "week", "synonyms": ["weekly", "by week", "week by week"]},
+        {"type": "synonyms", "value": "date", "synonyms": ["daily", "day by day", "by day", "by date"]}
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "season",
+      "values": [
+        {"type": "synonyms", "value": "Summer", "synonyms": ["summer vacation", "summer travel", "summer break"]},
+        {"type": "synonyms", "value": "Spring", "synonyms": ["spring break", "spring vacation"]},
+        {"type": "synonyms", "value": "Winter", "synonyms": ["winter break", "winter vacation", "Christmas season", "New Year"]},
+        {"type": "synonyms", "value": "Fall", "synonyms": ["Autumn", "fall break", "thanksgiving"]}
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "travel_purpose",
+      "values": [
+        {"type": "synonyms", "value": "vacation", "synonyms": ["leisure", "holiday", "getaway", "trip", "vacation travel"]},
+        {"type": "synonyms", "value": "business", "synonyms": ["work", "corporate", "business trip", "work travel"]},
+        {"type": "synonyms", "value": "family visit", "synonyms": ["visiting family", "family reunion", "visiting relatives"]},
+        {"type": "synonyms", "value": "emergency", "synonyms": ["urgent", "last-minute", "emergency travel"]}
       ],
       "fuzzy_match": true
     }
@@ -226,32 +321,45 @@
       },
       "conditions": "#greeting",
       "dialog_node": "greeting_node",
-      "previous_sibling": "welcome_node"
+      "previous_sibling": "welcome_node",
+      "digress_out": "allow_all"
     },
     {
       "type": "standard",
       "title": "Find Best Flight Time",
       "output": {
         "generic": [{
-          "values": [{"text": "I can help you find the best time to book a flight. To get started, where are you flying from?"}],
-          "response_type": "text"
+          "values": [
+            {"text": "<? entities.city && entities.city.length >= 2 ? 'I see you want to find flight prices from ' + entities.city[0].value + ' to ' + entities.city[1].value + '. When are you planning to travel?' : '' ?>"},
+            {"text": "<? entities.city && entities.city.length == 1 ? 'I see you want to find flights from ' + entities.city[0].value + '. Where would you like to fly to?' : '' ?>"},
+            {"text": "<? !(entities.city && entities.city.length) ? 'I can help you find the best time to book a flight. To get started, where are you flying from?' : '' ?>"}
+          ],
+          "response_type": "text",
+          "selection_policy": "sequential"
         }]
       },
       "context": {
-        "conversation_stage": "collecting_origin"
+        "origin": "<? entities.city && entities.city.length >= 1 ? entities.city[0].value : null ?>",
+        "destination": "<? entities.city && entities.city.length >= 2 ? entities.city[1].value : null ?>",
+        "conversation_stage": "<? entities.city && entities.city.length >= 2 ? 'collecting_travel_period' : entities.city && entities.city.length == 1 ? 'collecting_destination' : 'collecting_origin' ?>"
       },
       "conditions": "#find_best_flight_time",
       "dialog_node": "find_best_time_node",
       "previous_sibling": "greeting_node",
-      "digress_in": "does_not_return"
+      "digress_in": "does_not_return",
+      "digress_out": "allow_returning"
     },
     {
       "type": "standard",
       "title": "Collect Origin",
       "output": {
         "generic": [{
-          "values": [{"text": "<?@city? 'Great! You're flying from ' + @city + '. Where would you like to fly to?' : 'I need to know where you're departing from. For example, \"New York\" or \"Chicago\".' ?>"}],
-          "response_type": "text"
+          "values": [
+            {"text": "<? @city ? 'Great! You are flying from ' + @city + '. Where would you like to fly to?' : '' ?>"},
+            {"text": "<? !@city ? 'I need to know where you are departing from. For example, New York or Chicago.' : '' ?>"}
+          ],
+          "response_type": "text",
+          "selection_policy": "sequential"
         }]
       },
       "context": {
@@ -261,15 +369,20 @@
       "conditions": "$conversation_stage == 'collecting_origin'",
       "dialog_node": "collect_origin_node",
       "previous_sibling": "find_best_time_node",
-      "digress_in": "does_not_return"
+      "digress_in": "does_not_return",
+      "digress_out": "allow_returning"
     },
     {
       "type": "standard",
       "title": "Collect Destination",
       "output": {
         "generic": [{
-          "values": [{"text": "<?@city? 'Flying from ' + $origin + ' to ' + @city + '. When are you planning to travel? (e.g., \"June\" or \"December to January\")' : 'Please tell me your destination city.' ?>"}],
-          "response_type": "text"
+          "values": [
+            {"text": "<? @city ? 'Flying from ' + $origin + ' to ' + @city + '. When are you planning to travel? For example, June or December to January.' : '' ?>"},
+            {"text": "<? !@city ? 'Please tell me your destination city.' : '' ?>"}
+          ],
+          "response_type": "text",
+          "selection_policy": "sequential"
         }]
       },
       "context": {
@@ -279,69 +392,85 @@
       "conditions": "$conversation_stage == 'collecting_destination'",
       "dialog_node": "collect_destination_node",
       "previous_sibling": "collect_origin_node",
-      "digress_in": "does_not_return"
+      "digress_in": "does_not_return",
+      "digress_out": "allow_returning"
     },
     {
       "type": "standard",
       "title": "Collect Travel Period",
       "output": {
         "generic": [{
-          "values": [{"text": "<?@month? 'Got it! Do you have any preferred airlines? If not, just say \"no preference\".' : 'Please specify when you want to travel, for example \"June\" or \"December to February\".' ?>"}],
-          "response_type": "text"
+          "values": [
+            {"text": "<? @month.length > 0 ? 'Great! You plan to travel' + (@month.length > 1 ? ' from ' + @month[0] + ' to ' + @month[1] : ' in ' + @month[0]) + '. Do you have any preferred airlines? If not, just say \"no preference\".' : '' ?>"},
+            {"text": "<? !(@month.length > 0) ? 'When are you thinking of traveling? You can tell me specific months like \"June\" or a period like \"June to August\".' : '' ?>"}
+          ],
+          "response_type": "text",
+          "selection_policy": "sequential"
         }]
       },
       "context": {
-        "start_month": "@month.length > 0 ? @month[0] : null",
-        "end_month": "@month.length > 1 ? @month[1] : @month[0]",
-        "conversation_stage": "@month ? 'collecting_airline' : 'collecting_travel_period'"
+        "start_month": "<? @month.length > 0 ? @month[0] : null ?>",
+        "end_month": "<? @month.length > 1 ? @month[1] : @month[0] ?>",
+        "conversation_stage": "<? @month.length > 0 ? 'collecting_airline' : 'collecting_travel_period' ?>"
       },
       "conditions": "$conversation_stage == 'collecting_travel_period'",
       "dialog_node": "collect_travel_period_node",
       "previous_sibling": "collect_destination_node",
-      "digress_in": "does_not_return"
+      "digress_in": "does_not_return",
+      "digress_out": "allow_returning"
     },
     {
       "type": "standard",
       "title": "Collect Airline",
       "output": {
         "generic": [{
-          "values": [{"text": "Are you traveling as an adult, child, or student? Student status might qualify you for additional discounts."}],
-          "response_type": "text"
+          "values": [
+            {"text": "<? @airline ? 'Got it! Looking at ' + @airline + ' specifically. Are you traveling as an adult, child, or student? Student status might qualify you for additional discounts.' : '' ?>"},
+            {"text": "<? !@airline ? 'Are you traveling as an adult, child, or student? Student status might qualify you for additional discounts.' : '' ?>"}
+          ],
+          "response_type": "text",
+          "selection_policy": "sequential"
         }]
       },
       "context": {
-        "carrier": "@airline",
+        "carrier": "<? @airline ? @airline : null ?>",
         "conversation_stage": "collecting_passenger_type"
       },
       "conditions": "$conversation_stage == 'collecting_airline'",
       "dialog_node": "collect_airline_node",
       "previous_sibling": "collect_travel_period_node",
-      "digress_in": "does_not_return"
+      "digress_in": "does_not_return",
+      "digress_out": "allow_returning"
     },
     {
       "type": "standard",
       "title": "Collect Passenger Type",
       "output": {
         "generic": [{
-          "values": [{"text": "What level of price analysis would you prefer: monthly, quarterly, weekly, or daily? Monthly is our standard recommendation."}],
-          "response_type": "text"
+          "values": [
+            {"text": "<? @passenger_type ? 'Great! I see you are traveling as a ' + @passenger_type + '. What level of price analysis would you prefer: monthly, quarterly, weekly, or daily? Monthly is our standard recommendation.' : '' ?>"},
+            {"text": "<? !@passenger_type ? 'What level of price analysis would you prefer: monthly, quarterly, weekly, or daily? Monthly is our standard recommendation.' : '' ?>"}
+          ],
+          "response_type": "text",
+          "selection_policy": "sequential"
         }]
       },
       "context": {
-        "passenger_type": "@passenger_type ? @passenger_type : 'adult'",
+        "passenger_type": "<? @passenger_type ? @passenger_type : 'adult' ?>",
         "conversation_stage": "collecting_analysis_type"
       },
       "conditions": "$conversation_stage == 'collecting_passenger_type'",
       "dialog_node": "collect_passenger_type_node",
       "previous_sibling": "collect_airline_node",
-      "digress_in": "does_not_return"
+      "digress_in": "does_not_return",
+      "digress_out": "allow_returning"
     },
     {
       "type": "standard",
       "title": "Collect Analysis Type",
       "output": {
         "generic": [{
-          "values": [{"text": "Thanks for all the information! I'm now analyzing flight prices for $origin to $destination during $start_month<?$start_month != $end_month? ' to ' + $end_month : ''?>..."}],
+          "values": [{"text": "Thanks for all the information! I'm now analyzing flight prices for $origin to $destination during $start_month<? $start_month != $end_month ? ' to ' + $end_month : '' ?>..."}],
           "response_type": "text"
         }]
       },
@@ -351,13 +480,14 @@
         "dialog_node": "process_prediction_node"
       },
       "context": {
-        "analysis_type": "@analysis_type ? @analysis_type : 'monthly'",
+        "analysis_type": "<? @analysis_type ? @analysis_type : 'month' ?>",
         "conversation_stage": "processing_request"
       },
       "conditions": "$conversation_stage == 'collecting_analysis_type'",
       "dialog_node": "collect_analysis_type_node",
       "previous_sibling": "collect_passenger_type_node",
-      "digress_in": "does_not_return"
+      "digress_in": "does_not_return",
+      "digress_out": "allow_returning"
     },
     {
       "type": "standard",
@@ -396,7 +526,7 @@
       "title": "Display Results",
       "output": {
         "generic": [{
-          "values": [{"text": "✅ Flight Price Analysis: $origin to $destination\n\n✈️ Best time to book: $prediction_result.formatted_best_time\n\n💰 Expected fare: $<?$prediction_result.best_time.predicted_fare.toFixed(2)?>\n\n<?$passenger_type == 'student'? '🎓 Note: Students may qualify for additional 10-15% discounts\n\n' : ''?>Recommendations:\n• Book during this period for optimal prices\n• Consider mid-week departures for additional savings\n• Flexible dates can save you even more\n\nWould you like to analyze another route?"}],
+          "values": [{"text": "✅ Flight Price Analysis: $origin to $destination\n\n✈️ Best time to book: $prediction_result.formatted_best_time\n\n💰 Expected fare: $<? $prediction_result.best_time.predicted_fare.toFixed(2) ?>\n\n<? $carrier ? '🏢 Airline: ' + ($prediction_result.carrier_name || $carrier) + '\n\n' : '' ?><? $passenger_type == 'student'? '🎓 Note: Students may qualify for additional 10-15% discounts\n\n' : '' ?>Recommendations:\n• Book during this period for optimal prices\n• Consider mid-week departures for additional savings\n• Flexible dates can save you 10-15% more\n<? $carrier == 'Southwest' ? '• Take advantage of Southwest\\'s free checked bag policy\n' : '' ?><? $carrier == 'Spirit' || $carrier == 'Frontier' ? '• Remember to factor in baggage fees when comparing prices\n' : '' ?>\nWould you like to analyze another route?"}],
           "response_type": "text"
         }]
       },
@@ -405,14 +535,15 @@
       },
       "conditions": "$conversation_stage == 'completed' && $prediction_result.success",
       "dialog_node": "display_results_node",
-      "previous_sibling": "process_prediction_node"
+      "previous_sibling": "process_prediction_node",
+      "digress_out": "allow_all"
     },
     {
       "type": "standard",
       "title": "Handle Error",
       "output": {
         "generic": [{
-          "values": [{"text": "I'm sorry, but I couldn't get price predictions for that route. This may be due to limited data. Would you like to try a different route?"}],
+          "values": [{"text": "I'm sorry, but I couldn't get price predictions for that route. This may be due to limited data for the $origin to $destination route. Would you like to try a different route?"}],
           "response_type": "text"
         }]
       },
@@ -421,14 +552,15 @@
       },
       "conditions": "$conversation_stage == 'completed' && !$prediction_result.success",
       "dialog_node": "handle_error_node",
-      "previous_sibling": "display_results_node"
+      "previous_sibling": "display_results_node",
+      "digress_out": "allow_all"
     },
     {
       "type": "standard",
       "title": "Airline Information",
       "output": {
         "generic": [{
-          "values": [{"text": "Here's some information about airlines:\n\n• Budget carriers like Spirit, Frontier and Southwest typically offer the lowest base fares\n• Delta, American, and United are full-service carriers with more amenities\n• Southwest offers 2 free checked bags\n• Budget carriers often charge for carry-on bags and seat selection\n• JetBlue offers more legroom in standard economy than other US carriers\n\nWould you like to know about a specific airline?"}],
+          "values": [{"text": "Here's some information about airlines:\n\n• Budget carriers like Spirit, Frontier, and Allegiant typically offer the lowest base fares but charge for extras\n• Southwest offers 2 free checked bags, making it economical for travelers with luggage\n• Delta, American, and United are full-service carriers with more amenities and broader route networks\n• JetBlue offers more legroom in standard economy than other US carriers\n• Alaska Airlines consistently ranks high for customer satisfaction\n\n<? @airline ? 'Looking for specific information about ' + @airline + '?' : 'Would you like to know about a specific airline?' ?>"}],
           "response_type": "text"
         }]
       },
@@ -436,52 +568,164 @@
       "dialog_node": "airline_info_node",
       "previous_sibling": "handle_error_node",
       "digress_in": "returns",
-      "digress_out": "allow_returning"
+      "digress_out": "allow_all"
+    },
+    {
+      "type": "standard",
+      "title": "Specific Airline Info",
+      "output": {
+        "generic": [{
+          "values": [
+            {"text": "<? @airline == 'American' ? 'American Airlines (AA) is one of the largest airlines in the world. They operate a hub-and-spoke network with major hubs in Dallas/Fort Worth, Charlotte, Chicago, Miami, and others. They charge $30 for the first checked bag on domestic flights. Their frequent flyer program is AAdvantage.' : '' ?>"},
+            {"text": "<? @airline == 'Delta' ? 'Delta Air Lines (DL) is known for operational reliability and customer service. Their hubs include Atlanta, Detroit, Minneapolis, and Salt Lake City. Delta charges $30 for the first checked bag on most domestic flights. Their frequent flyer program is SkyMiles, which never expires.' : '' ?>"},
+            {"text": "<? @airline == 'Southwest' ? 'Southwest Airlines (WN) is unique with their open seating policy (no assigned seats) and generous baggage allowance (2 free checked bags). They do not charge change fees. Southwest operates a point-to-point network rather than a traditional hub-and-spoke system. Their frequent flyer program is Rapid Rewards.' : '' ?>"},
+            {"text": "<? @airline == 'United' ? 'United Airlines (UA) is one of the major US carriers with hubs in Chicago, Denver, Houston, and others. They charge $30-$35 for the first checked bag on domestic flights. Their frequent flyer program is MileagePlus. United has a large international network through the Star Alliance.' : '' ?>"},
+            {"text": "<? @airline == 'JetBlue' ? 'JetBlue (B6) is known for offering more legroom than other US airlines in standard economy. They have free in-flight WiFi and entertainment. JetBlue charges $35 for the first checked bag for most fares. Their frequent flyer program is TrueBlue. Their main hub is in New York (JFK).' : '' ?>"},
+            {"text": "<? @airline == 'Spirit' ? 'Spirit Airlines (NK) is an ultra-low-cost carrier that offers very low base fares but charges for nearly everything extra, including carry-on bags, seat assignments, and even water. They have one of the tightest seat pitches in the industry. Their frequent flyer program is Free Spirit.' : '' ?>"},
+            {"text": "<? @airline == 'Frontier' ? 'Frontier Airlines (F9) is a low-cost carrier with low base fares and fees for extras like baggage and seat selection. Their aircraft feature animals on the tail and they focus on environmental efficiency. Their frequent flyer program is Frontier Miles. Their main hub is in Denver.' : '' ?>"},
+            {"text": "<? @airline == 'Alaska' ? 'Alaska Airlines (AS) consistently ranks high in customer satisfaction. They have a strong presence on the West Coast with hubs in Seattle, Portland, San Francisco, and Los Angeles. They charge $30 for the first checked bag. Their frequent flyer program is Mileage Plan, which partners with many international airlines.' : '' ?>"},
+            {"text": "<? @airline == 'Allegiant' ? 'Allegiant Air (G4) is an ultra-low-cost carrier focusing on leisure travel markets. They often fly from small airports to vacation destinations with limited frequency (not daily service). They charge for all baggage including carry-ons, seat assignments, and other extras.' : '' ?>"},
+            {"text": "<? @airline == 'Sun Country' ? 'Sun Country Airlines (SY) is a low-cost carrier based in Minneapolis. They focus on flying to leisure destinations, particularly in warm weather locations. Like other budget airlines, they charge for baggage and seat selection. Their frequent flyer program is called Sun Country Rewards.' : '' ?>"},
+            {"text": "<? !@airline ? 'Is there a particular airline you would like to know more about?' : '' ?>"}
+          ],
+          "response_type": "text",
+          "selection_policy": "sequential"
+        }]
+      },
+      "conditions": "@airline",
+      "dialog_node": "specific_airline_info_node",
+      "previous_sibling": "airline_info_node",
+      "digress_in": "returns",
+      "digress_out": "allow_all"
     },
     {
       "type": "standard",
       "title": "Baggage Policies",
       "output": {
         "generic": [{
-          "values": [{"text": "Most airlines allow 1 personal item and 1 carry-on bag for free. For checked bags:\n\n• Southwest: 2 free checked bags\n• Delta, American, United: First bag $30-35, second bag $40-45\n• Budget airlines (Spirit, Frontier): Charges for all bags including carry-on\n• International flights: Often 1-2 free checked bags depending on destination\n\nBag weight limits are typically 50 lbs (23 kg) for checked bags. Size restrictions vary by airline."}],
+          "values": [{"text": "Here's a quick guide to baggage policies for major US airlines:\n\n• Southwest: Best baggage policy with 2 free checked bags (up to 50 lbs each)\n• Most major airlines (American, Delta, United): First checked bag costs $30-35, second bag $40-45\n• Budget carriers (Spirit, Frontier, Allegiant): Charge for all bags including carry-on ($35-65 depending on when you pay)\n• JetBlue: First checked bag $35, Blue Plus and Mint fares include checked bags\n• Overweight bags (over 50 lbs): Additional $100-200 fee on most airlines\n\n<? @airline ? 'Would you like specific baggage information for ' + @airline + '?' : 'Do you need information for a specific airline?' ?>"}],
           "response_type": "text"
         }]
       },
       "conditions": "#baggage_policies",
       "dialog_node": "baggage_policies_node",
-      "previous_sibling": "airline_info_node",
+      "previous_sibling": "specific_airline_info_node",
       "digress_in": "returns",
-      "digress_out": "allow_returning"
+      "digress_out": "allow_all"
+    },
+    {
+      "type": "standard",
+      "title": "Specific Baggage Policy",
+      "output": {
+        "generic": [{
+          "values": [
+            {"text": "<? @airline == 'American' ? 'American Airlines Baggage Policy:\n• Carry-on: 1 free personal item + 1 carry-on bag\n• First checked bag: $30 (domestic), often waived with their credit card or elite status\n• Second checked bag: $40 (domestic)\n• Weight limit: 50 lbs per bag\n• Size limits: 62 linear inches (length + width + height)\n• Overweight fee (51-70 lbs): $100 additional' : '' ?>"},
+            {"text": "<? @airline == 'Delta' ? 'Delta Air Lines Baggage Policy:\n• Carry-on: 1 free personal item + 1 carry-on bag\n• First checked bag: $30 (domestic), often waived with their credit card or elite status\n• Second checked bag: $40 (domestic)\n• Weight limit: 50 lbs per bag\n• Size limits: 62 linear inches total\n• Overweight fee (51-70 lbs): $100 additional' : '' ?>"},
+            {"text": "<? @airline == 'Southwest' ? 'Southwest Airlines Baggage Policy:\n• Carry-on: 1 free personal item + 1 carry-on bag\n• First and second checked bags: FREE (up to 50 lbs each)\n• Third bag and beyond: $75 each\n• Weight limit: 50 lbs per bag\n• Size limits: 62 linear inches total\n• Overweight fee (51-100 lbs): $75 additional\n\nThis is the most generous baggage policy among major US airlines.' : '' ?>"},
+            {"text": "<? @airline == 'United' ? 'United Airlines Baggage Policy:\n• Carry-on: 1 free personal item + 1 carry-on bag\n• First checked bag: $35 (domestic), often waived with their credit card or elite status\n• Second checked bag: $45 (domestic)\n• Weight limit: 50 lbs per bag\n• Size limits: 62 linear inches total\n• Overweight fee (51-70 lbs): $100 additional' : '' ?>"},
+            {"text": "<? @airline == 'JetBlue' ? 'JetBlue Baggage Policy:\n• Carry-on: 1 free personal item + 1 carry-on bag\n• First checked bag: $35 (free with Blue Plus, Mint, or Mosaic status)\n• Second checked bag: $45\n• Weight limit: 50 lbs per bag\n• Size limits: 62 linear inches total\n• Overweight fee (51-99 lbs): $150 additional' : '' ?>"},
+            {"text": "<? @airline == 'Spirit' ? 'Spirit Airlines Baggage Policy:\n• Personal item only is free (must fit under seat)\n• Carry-on bag: $37-65 (cheaper when purchased in advance)\n• First checked bag: $32-65 (cheaper when purchased in advance)\n• Second checked bag: $42-75\n• Weight limit: 40 lbs per bag (stricter than most airlines)\n• Size limits: 62 linear inches total\n• Overweight fee (41-50 lbs): $30 additional\n\nPrices vary based on when you purchase (booking, before check-in, at check-in, or at gate).' : '' ?>"},
+            {"text": "<? @airline == 'Frontier' ? 'Frontier Airlines Baggage Policy:\n• Personal item only is free (must fit under seat)\n• Carry-on bag: $39-60 (cheaper when purchased in advance)\n• First checked bag: $34-55 (cheaper when purchased in advance)\n• Second checked bag: $45-60\n• Weight limit: 50 lbs per bag\n• Size limits: 62 linear inches total\n• Overweight fee (51-100 lbs): $75 additional\n\nPrices vary based on when you purchase and route.' : '' ?>"},
+            {"text": "<? @airline == 'Alaska' ? 'Alaska Airlines Baggage Policy:\n• Carry-on: 1 free personal item + 1 carry-on bag\n• First checked bag: $30 (often waived with their credit card or elite status)\n• Second checked bag: $40\n• Weight limit: 50 lbs per bag\n• Size limits: 62 linear inches total\n• Overweight fee (51-100 lbs): $100 additional' : '' ?>"},
+            {"text": "<? @airline == 'Allegiant' ? 'Allegiant Air Baggage Policy:\n• Personal item only is free (must fit under seat)\n• Carry-on bag: $20-35 (varies by route, cheaper online)\n• First checked bag: $25-35 (varies by route, cheaper online)\n• Second checked bag: $35-45\n• Weight limit: 40 lbs per bag (stricter than most airlines)\n• Size limits: 62 linear inches total\n• Overweight fee (41-70 lbs): $50 additional' : '' ?>"},
+            {"text": "<? @airline == 'Sun Country' ? 'Sun Country Airlines Baggage Policy:\n• Carry-on: 1 free personal item, carry-on bag costs $30-40\n• First checked bag: $30-40 (cheaper when purchased in advance)\n• Second checked bag: $40-50\n• Weight limit: 50 lbs per bag\n• Size limits: 62 linear inches total\n• Overweight fee (51-79 lbs): $50 additional' : '' ?>"},
+            {"text": "<? !@airline ? 'Would you like baggage information for a specific airline?' : '' ?>"}
+          ],
+          "response_type": "text",
+          "selection_policy": "sequential"
+        }]
+      },
+      "conditions": "@airline",
+      "dialog_node": "specific_baggage_policy_node",
+      "previous_sibling": "baggage_policies_node",
+      "digress_in": "returns",
+      "digress_out": "allow_all"
     },
     {
       "type": "standard",
       "title": "Student Discounts",
       "output": {
         "generic": [{
-          "values": [{"text": "Yes, many airlines offer student discounts! Here's what you should know:\n\n• StudentUniverse and STA Travel offer verified student discounts (10-30% off)\n• Airlines like Lufthansa, Air France, and American sometimes have student fares\n• You'll need a valid student ID to qualify\n• Most student discounts apply to international flights\n• Some airlines offer additional baggage allowance for students\n\nWhen searching, always check for student/youth fares or use student discount sites."}],
+          "values": [{"text": "Yes, students can save on airfare! Here's what you should know:\n\n• Dedicated student travel sites like StudentUniverse and STA Travel offer verified student discounts (10-30% off)\n• Some airlines offer student fares but require valid .edu email or student ID\n• Student discounts are more common for international flights than domestic\n• Best student deals are typically found on:  \n   - Lufthansa, Air France (European carriers)  \n   - United, American (for international routes)\n• Student discount sites may offer special deals during spring and winter breaks\n\nTo get the best student deals, always check both the airline's website and student discount platforms."}],
           "response_type": "text"
         }]
       },
       "conditions": "#student_discounts",
       "dialog_node": "student_discounts_node",
-      "previous_sibling": "baggage_policies_node",
+      "previous_sibling": "specific_baggage_policy_node",
       "digress_in": "returns",
-      "digress_out": "allow_returning"
+      "digress_out": "allow_all"
+    },
+    {
+      "type": "standard",
+      "title": "Seasonal Trends",
+      "output": {
+        "generic": [{
+          "values": [{"text": "Flight prices follow predictable seasonal patterns:\n\n• January (Post-holiday): Generally lower prices, good deals available\n• February-March: Moderate prices except during Spring Break weeks\n• April-May: Shoulder season with reasonable fares\n• June-August: Peak summer season with highest prices\n• September-October: Another good shoulder season\n• November-December: High prices around Thanksgiving and Christmas, but deals available between holidays\n\nDestination matters too: Caribbean is expensive in winter, Europe peaks in summer, and Hawaii commands premium prices year-round.\n\n<? @season ? 'For ' + @season + ' travel specifically, ' + (@season == 'Summer' ? 'book as early as possible (3-4 months ahead) as summer is peak season with consistently high prices.' : @season == 'Winter' ? 'book holiday travel (Christmas/New Year) at least 3 months in advance, but January/February (except Valentine\\'s Day) offer better deals.' : @season == 'Spring' ? 'avoid Spring Break weeks in March/April for best prices. early May can offer excellent value.' : 'consider early October for best deals as November prices increase for Thanksgiving.') : '' ?>"}],
+          "response_type": "text"
+        }]
+      },
+      "conditions": "#seasonal_trends",
+      "dialog_node": "seasonal_trends_node",
+      "previous_sibling": "student_discounts_node",
+      "digress_in": "returns",
+      "digress_out": "allow_all"
+    },
+    {
+      "type": "standard",
+      "title": "Flight Prediction Explanation",
+      "output": {
+        "generic": [{
+          "values": [{"text": "FlightSavvy uses advanced machine learning to predict optimal booking times:\n\n• Our system analyzes historical flight pricing data across millions of routes\n• We identify patterns based on factors like season, day of week, holidays, and carrier\n• Predictions incorporate airline pricing strategies and market competition\n• The system accounts for route-specific trends (e.g., vacation destinations have different patterns)\n• Machine learning models continuously improve as they process more data\n\nFor your specific route, we analyze multiple timeframes to identify when prices historically dip and recommend the optimal booking window based on your travel dates and airline preferences."}],
+          "response_type": "text"
+        }]
+      },
+      "conditions": "#flight_prediction_explanation",
+      "dialog_node": "flight_prediction_explanation_node",
+      "previous_sibling": "seasonal_trends_node",
+      "digress_in": "returns",
+      "digress_out": "allow_all"
+    },
+    {
+      "type": "standard",
+      "title": "Reset Conversation",
+      "output": {
+        "generic": [{
+          "values": [{"text": "Let's start fresh! What would you like to know about flight prices?"}],
+          "response_type": "text"
+        }]
+      },
+      "context": {
+        "origin": null,
+        "destination": null,
+        "start_month": null,
+        "end_month": null,
+        "carrier": null,
+        "passenger_type": null,
+        "analysis_type": null,
+        "conversation_stage": null,
+        "prediction_result": null
+      },
+      "conditions": "#reset_conversation",
+      "dialog_node": "reset_conversation_node",
+      "previous_sibling": "flight_prediction_explanation_node",
+      "digress_in": "returns",
+      "digress_out": "allow_all"
     },
     {
       "type": "standard",
       "title": "Help",
       "output": {
         "generic": [{
-          "values": [{"text": "I can help you with:\n\n• Finding the best time to book flights\n• Providing information about airlines\n• Explaining baggage policies\n• Checking for student discounts\n\nTo get started, try saying something like \"When is the best time to fly from New York to Miami?\" or \"Tell me about baggage fees.\""}],
+          "values": [{"text": "I can help you with:\n\n• Finding the best time to book flights based on your travel plans\n• Providing information about specific airlines and their policies\n• Explaining baggage policies and fees\n• Sharing student discount opportunities for air travel\n• Offering insights into seasonal pricing trends\n• Explaining how our flight price predictions work\n\nTo get started with flight price predictions, simply tell me something like \"When is the best time to fly from New York to Miami?\" or \"I need to find cheap flights to Chicago in June.\""}],
           "response_type": "text"
         }]
       },
       "conditions": "#help",
       "dialog_node": "help_node",
-      "previous_sibling": "student_discounts_node",
+      "previous_sibling": "reset_conversation_node",
       "digress_in": "returns",
-      "digress_out": "allow_returning"
+      "digress_out": "allow_all"
     },
     {
       "type": "standard",
@@ -494,7 +738,23 @@
       },
       "conditions": "#goodbye",
       "dialog_node": "goodbye_node",
-      "previous_sibling": "help_node"
+      "previous_sibling": "help_node",
+      "digress_in": "returns",
+      "digress_out": "allow_all"
+    },
+    {
+      "type": "standard",
+      "title": "Ready for New Query",
+      "output": {
+        "generic": [{
+          "values": [{"text": "Would you like to search for another route or get information about a different aspect of air travel?"}],
+          "response_type": "text"
+        }]
+      },
+      "conditions": "$conversation_stage == 'ready_for_new_query'",
+      "dialog_node": "ready_for_new_query_node",
+      "previous_sibling": "goodbye_node",
+      "digress_out": "allow_all"
     },
     {
       "type": "standard",
@@ -507,9 +767,30 @@
       },
       "conditions": "anything_else",
       "dialog_node": "anything_else_node",
-      "previous_sibling": "goodbye_node"
+      "previous_sibling": "ready_for_new_query_node",
+      "digress_in": "returns",
+      "digress_out": "allow_all"
     }
   ],
+  "counterexamples": [
+    {"text": "book a flight for me"},
+    {"text": "purchase tickets now"},
+    {"text": "reserve first class seats"},
+    {"text": "change my flight reservation"},
+    {"text": "cancel my booking"}
+  ],
+  "learning_opt_out": false,
+  "system_settings": {
+    "disambiguation": {
+      "prompt": "Did you mean:",
+      "enabled": true,
+      "randomize": true,
+      "max_suggestions": 3
+    },
+    "human_agent_assist": {
+      "prompt": "Did you mean:"
+    }
+  },
   "language": "en",
   "description": "A travel assistant chatbot that helps users find the best time to book flights",
   "name": "FlightSavvy-Chatbot"
