@@ -284,7 +284,6 @@ const AIAssistant: React.FC = () => {
       return `I couldn't find prediction results for that route. ${results.error || 'Please try with different parameters.'}`;
     }
     
-    const route = results.route;
     const bestTime = results.best_time;
     const formattedBestTime = results.formatted_best_time;
     const predictedFare = bestTime.predicted_fare.toFixed(2);
@@ -574,7 +573,6 @@ Respond with just one word: either "flight_booking_request" or "general_flight_q
     setIsTyping(true);
 
     // Create a local copy of messages that includes the new user message
-    const updatedMessages = [...messages, userMessage];
 
     try {
       // Process the message with updated conversation history
