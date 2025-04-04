@@ -6,12 +6,12 @@ interface PredictionParams {
     weeksAhead?: number;
   }
   
-export const API_URL = '/api';
+  export const API_URL = 'https://flightsavvyv2.onrender.com/api';
   
   export const flightApi = {
     predictBestTime: async (params: PredictionParams) => {
       try {
-        const response = await fetch(`${API_URL}`, {
+        const response = await fetch(`${API_URL}/predict`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

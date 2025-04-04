@@ -280,7 +280,7 @@ const predictBestTime = async (params: {
   carrier?: string;
 }) => {
   try {
-    const response = await fetch('https://flight-savvy-v2-ecru.vercel.app/api/predict', {
+    const response = await fetch('https://flightsavvyv2.onrender.com/api/predict', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
