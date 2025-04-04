@@ -12,6 +12,43 @@ CORS(app)  # Enable CORS for all routes
 # Import your prediction function
 from prediction import predict_best_time_to_buy_ticket
 
+@app.route('/')
+def home():
+    return {
+        'message': 'Welcome to the FlightSavvy API!',
+        'List of endpoints': {
+            '/api/predict': 'Predict the best time to buy a flight ticket.',
+            '/api/help': 'Get help on how to use the API.'
+        }
+    }
+
+
+@app.route('/api/help')
+def help():
+    return {
+        'message': 'This is the help endpoint.',
+        'usage': {
+            'POST /api/predict': {
+                'description': 'Predict the best time to buy a flight ticket.',
+                'parameters': {
+                    'origin': 'Origin airport code (e.g., "JFK").',
+                    'destination': 'Destination airport code (e.g., "LAX").',
+                    'granularity': {
+                        'description': 'Granularity of the prediction.',
+                        'options': ['day', 'week', 'month', 'quarter'],
+                        'default': 'quarter'
+                    },
+                    'futureYear': '(optional) Future year for prediction.',
+                    'weeksAhead': '(optional) Number of weeks ahead for prediction.',
+                    'start_month': '(optional) Start month for travel period.',
+                    'end_month': '(optional) End month for travel period.',
+                    'carrier': '(optional) Airline carrier code.'
+                }
+            }
+        }
+    }
+
+
 @app.route('/api/predict', methods=['POST'])
 def predict():
     data = request.json
