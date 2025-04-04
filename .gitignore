@@ -31,7 +31,6 @@ __pycache__/
 backend/__pycache__/
 
 # Files
-api/data/*
 api/models/lstm_Alb_Mia.h5
 api/models/scaler_Alb_Mia.pkl
 api/price_predictor.ipynb

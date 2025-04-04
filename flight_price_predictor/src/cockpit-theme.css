@@ -1463,34 +1463,6 @@
     color: var(--text-bright) !important;
   }
   
-  /* Style the input area */
-  .WACInputContainer {
-    background-color: var(--primary-dark) !important;
-    border-top: 1px solid var(--accent-blue) !important;
-    position: relative !important;
-  }
-  
-  .WACInputContainer::before {
-    content: '' !important;
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    height: 1px !important;
-    background: linear-gradient(to right, transparent, var(--accent-teal), transparent) !important;
-  }
-  
-  .WACInputField {
-    background-color: rgba(10, 25, 41, 0.6) !important;
-    border: 1px solid var(--accent-blue) !important;
-    color: var(--text-bright) !important;
-  }
-  
-  .WACInputField:focus {
-    border-color: var(--accent-teal) !important;
-    box-shadow: 0 0 0 2px rgba(51, 201, 220, 0.3) !important;
-  }
-  
   .WACSendButton {
     background: linear-gradient(135deg, var(--accent-blue), var(--accent-teal)) !important;
   }

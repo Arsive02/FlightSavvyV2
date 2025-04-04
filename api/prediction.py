@@ -1,26 +1,17 @@
-# Set matplotlib backend to non-interactive Agg
-# This must be done before importing matplotlib.pyplot
 import matplotlib
-matplotlib.use('Agg')  # Use the Agg backend which doesn't require a GUI
+matplotlib.use('Agg')  # Agg backend for non-GUI environments
 
 import pandas as pd
 import numpy as np
 import joblib
 import datetime
-import matplotlib.pyplot as plt
-import io
-import base64
-import os
 import random
-from dateutil.relativedelta import relativedelta
 import calendar
 import json
 
-# Define month names for reference
 months = ['January', 'February', 'March', 'April', 'May', 'June', 
           'July', 'August', 'September', 'October', 'November', 'December']
 
-# Complete carrier categorization
 CARRIER_CATEGORIES = {
     # Premium/Legacy Carriers (15-30% more expensive)
     'PREMIUM': {
@@ -181,7 +172,6 @@ def adjust_fare_by_carrier(fare, carrier_code, route=None):
     carrier_info = get_carrier_info(carrier_code)
     carrier_factor = carrier_info['factor']
     
-    # Apply route-specific adjustments if available
     route_factor = 1.0
     if route and route in BASE_ROUTE_PRICES:
         # Some carriers may have special pricing on specific routes
@@ -234,23 +224,19 @@ def predict_best_time_to_buy_ticket(origin, destination, granularity="quarter",
         Contains best_time, predictions, and chart data for visualization
     """
     try:
-        # Ensure airport codes are uppercase
         origin = origin.upper()
         destination = destination.upper()
         route_name = f"{origin}-{destination}"
         
-        # Set default year if not provided
         if future_year is None:
             future_year = datetime.datetime.now().year
         else:
-            # Convert future_year to integer if it's a string
             future_year = int(future_year)
             
         print(f"Predicting best time to buy for route: {route_name} with granularity: {granularity}")
         if start_month and end_month:
             print(f"Travel period: Months {start_month} to {end_month}")
         
-        # Get carrier information if provided
         carrier_info = None
         if carrier:
             carrier_info = get_carrier_info(carrier)
@@ -263,14 +249,12 @@ def predict_best_time_to_buy_ticket(origin, destination, granularity="quarter",
         except Exception as e:
             print(f"Error loading Random Forest model: {e}")
                 
-        # Try to load time series model (optional)
         try:
             ts_model = joblib.load('models/flight_fare_ts_model.joblib')
         except Exception as e:
             print(f"Time series model not available: {str(e)}")
             ts_model = None
         
-        # Load sample data for feature extraction
         if filepath is None:
             filepath = 'data/US Airline Flight Routes and Fares 1993-2024.csv'
         
@@ -279,7 +263,6 @@ def predict_best_time_to_buy_ticket(origin, destination, granularity="quarter",
             df = pd.read_csv(filepath)
         except Exception as e:
             print(f"Error loading data file: {e}")
-            # Create a dummy dataframe for demonstration
             df = pd.DataFrame({
                 'airport_1': ['DFW', 'LAX', 'ATL'],
                 'airport_2': ['LAX', 'JFK', 'MIA'],
@@ -297,63 +280,49 @@ def predict_best_time_to_buy_ticket(origin, destination, granularity="quarter",
                 'fare_low': [200, 300, 250]
             })
         
-        # Ensure 'route' column exists
         if 'route' not in df.columns:
             print("Creating 'route' column from airport codes")
             df['route'] = df['airport_1'] + '-' + df['airport_2']
         
-        # Filter data for the specific route or similar routes
         route_data = df[df['route'] == route_name].copy()
         
         # If no exact route match, find similar routes or use average values
         if route_data.empty:
             print(f"No data for exact route {route_name}, using similar routes or average values")
-            # Try to find routes with same origin
             origin_routes = df[df['airport_1'] == origin]
             if not origin_routes.empty:
                 route_data = origin_routes.iloc[0:1].copy()
                 print(f"Using data from route with same origin: {route_data['route'].values[0]}")
             else:
-                # Use an average of all routes
                 route_data = df.iloc[0:1].copy()
                 print("Using average route data")
             
-            # Update the route information
             route_data['airport_1'] = origin
             route_data['airport_2'] = destination
             route_data['route'] = route_name
             
-            # If we have a base price for this route, use it
             if route_name in BASE_ROUTE_PRICES:
                 print(f"Using base price for route {route_name}: ${BASE_ROUTE_PRICES[route_name]}")
                 route_data['fare'] = BASE_ROUTE_PRICES[route_name]
             else:
-                # Estimate price based on distance if available
                 if 'nsmiles' in route_data.columns:
-                    # Simple linear model: longer routes cost more
                     estimated_fare = route_data['nsmiles'].values[0] * 0.15  # $0.15 per mile as base
                     print(f"Estimating fare based on distance: ${estimated_fare:.2f}")
                     route_data['fare'] = estimated_fare
         
-        # Apply carrier-specific price adjustments if a carrier is specified
         if carrier and carrier_info:
-            # Start with the base fare
             base_fare = route_data['fare'].values[0]
             
-            # Apply detailed carrier-specific pricing
             adjusted_fare = adjust_fare_by_carrier(base_fare, carrier, route_name)
             
             print(f"Adjusting fare for {carrier} ({carrier_info['name']}): ${base_fare:.2f} → ${adjusted_fare:.2f}")
             
-            # Update the route data with the carrier-adjusted fare
             route_data['fare'] = adjusted_fare
             
-            # Store carrier information in route data
             route_data['carrier'] = carrier
             route_data['carrier_name'] = carrier_info['name']
             route_data['carrier_category'] = carrier_info.get('category', 'UNKNOWN')
             
-            # If carrier matches either known carrier in the data, use that carrier's fare
             if 'carrier_lg' in route_data.columns and route_data['carrier_lg'].values[0] == carrier:
                 if 'fare_lg' in route_data.columns:
                     print(f"Using {carrier} as the major carrier with fare: ${route_data['fare_lg'].values[0]:.2f}")
@@ -363,43 +332,36 @@ def predict_best_time_to_buy_ticket(origin, destination, granularity="quarter",
                     print(f"Using {carrier} as the low-fare carrier with fare: ${route_data['fare_low'].values[0]:.2f}")
                     route_data['fare'] = route_data['fare_low']
         
-        # Engineer required features
         print("Engineering required features")
         
-        # Calculate price_per_mile
         if 'nsmiles' in route_data.columns and 'fare' in route_data.columns:
             route_data['price_per_mile'] = route_data['fare'] / route_data['nsmiles']
         else:
             route_data['price_per_mile'] = 0.25  # Default average price per mile
         
-        # Calculate market_concentration (using large_ms or default)
         if 'large_ms' in route_data.columns and 'lf_ms' in route_data.columns:
             route_data['market_concentration'] = np.maximum(
                 route_data['large_ms'], route_data['lf_ms'])
         else:
             route_data['market_concentration'] = 0.8  # Default high concentration
         
-        # Calculate price_difference (between large and low fare carriers)
         if 'fare_lg' in route_data.columns and 'fare_low' in route_data.columns:
             route_data['price_difference'] = route_data['fare_lg'] - route_data['fare_low']
         else:
             route_data['price_difference'] = 20.0  # Default difference
         
-        # Calculate route_competition
         if 'carrier_lg' in route_data.columns:
             # If we had access to all data, we'd group by route
             route_data['route_competition'] = 2  # Default: assume 2 carriers
         else:
             route_data['route_competition'] = 2  # Default competition value
         
-        # Create season if missing
         if 'season' not in route_data.columns:
             print("Adding season column")
             seasons = {1: 'Winter', 2: 'Spring', 3: 'Summer', 4: 'Fall'}
             route_data['quarter'] = route_data['quarter'].astype(int)
             route_data['season'] = route_data['quarter'].map(seasons)
         
-        # Check essential columns for prediction
         required_columns = ['Year', 'quarter', 'nsmiles', 'passengers']
         for col in required_columns:
             if col not in route_data.columns:
@@ -409,24 +371,19 @@ def predict_best_time_to_buy_ticket(origin, destination, granularity="quarter",
                 elif col == 'passengers':
                     route_data['passengers'] = 250  # Default passenger count
         
-        # Generate prediction dates based on granularity
         prediction_dates = []
         
         if granularity == "date":
-            # If predicting for specific dates, generate dates based on weeks ahead
             if weeks_ahead is None:
                 weeks_ahead = 12  # Default to 12 weeks (about 3 months) ahead
             
-            # Generate dates from today to X weeks ahead
             start_date = datetime.datetime.now().date()
             for i in range(weeks_ahead * 7):
                 prediction_dates.append(start_date + datetime.timedelta(days=i))
                 
-            # If start_month and end_month are provided, filter dates to be within that window
             if start_month is not None and end_month is not None:
                 filtered_dates = []
                 
-                # Helper function to check if a date is within the travel period
                 def is_in_travel_period(date):
                     month = date.month
                     if start_month <= end_month:
@@ -438,28 +395,22 @@ def predict_best_time_to_buy_ticket(origin, destination, granularity="quarter",
                     if is_in_travel_period(date):
                         filtered_dates.append(date)
                 
-                # If we have filtered dates, use those
                 if filtered_dates:
                     prediction_dates = filtered_dates
         
         elif granularity == "week":
-            # Generate weekly dates for the year
             start_date = datetime.datetime(future_year, 1, 1)
-            # Find the first Monday
             while start_date.weekday() != 0:  # 0 = Monday
                 start_date += datetime.timedelta(days=1)
             
-            # Generate dates for each Monday of the year
             current_date = start_date
             while current_date.year == future_year:
                 prediction_dates.append(current_date.date())
                 current_date += datetime.timedelta(days=7)
                 
-            # If start_month and end_month are provided, filter weeks to be within that window
             if start_month is not None and end_month is not None:
                 filtered_dates = []
                 
-                # Helper function to check if a date is within the travel period
                 def is_in_travel_period(date):
                     month = date.month
                     if start_month <= end_month:
@@ -471,46 +422,35 @@ def predict_best_time_to_buy_ticket(origin, destination, granularity="quarter",
                     if is_in_travel_period(date):
                         filtered_dates.append(date)
                 
-                # If we have filtered dates, use those
                 if filtered_dates:
                     prediction_dates = filtered_dates
         
         elif granularity == "month":
-            # Generate monthly dates (1st of each month)
             for month in range(1, 13):
                 prediction_dates.append(datetime.datetime(future_year, month, 1).date())
         
         elif granularity == "quarter":
-            # Generate quarterly dates (middle of each quarter)
             quarter_months = [2, 5, 8, 11]  # February, May, August, November
             for month in quarter_months:
                 prediction_dates.append(datetime.datetime(future_year, month, 15).date())
         
-        # Predictions for each date
         predictions = []
         
-        # For each date, predict the fare
         for pred_date in prediction_dates:
             print(f"Generating prediction for {pred_date}")
             
-            # Create a sample based on route average values
             sample_data = route_data.iloc[0].copy()
             
-            # Set date-related features
             sample_data['Year'] = pred_date.year
             sample_data['month'] = pred_date.month
             sample_data['day_of_year'] = pred_date.timetuple().tm_yday
             
-            # Determine quarter
             quarter = (pred_date.month - 1) // 3 + 1
             sample_data['quarter'] = quarter
             
-            # Set week number (1-52)
             week_number = pred_date.isocalendar()[1]
             sample_data['week'] = week_number
             
-            # Set holiday period flag
-            # Major holidays: New Year's, Thanksgiving, Christmas, 4th of July, etc.
             major_holidays = [
                 (1, 1),    # New Year's
                 (12, 25),  # Christmas
@@ -531,7 +471,6 @@ def predict_best_time_to_buy_ticket(origin, destination, granularity="quarter",
                         is_holiday = True
                         break
             
-            # Check for holiday periods (2 weeks around major holidays)
             if not is_holiday:
                 for month, days in major_holidays:
                     if isinstance(days, list):
@@ -546,7 +485,6 @@ def predict_best_time_to_buy_ticket(origin, destination, granularity="quarter",
             
             sample_data['is_holiday_period'] = is_holiday
             
-            # Set season based on month
             seasons_by_month = {
                 1: 'Winter', 2: 'Winter', 3: 'Spring', 
                 4: 'Spring', 5: 'Spring', 6: 'Summer',
@@ -555,35 +493,29 @@ def predict_best_time_to_buy_ticket(origin, destination, granularity="quarter",
             }
             sample_data['season'] = seasons_by_month[pred_date.month]
             
-            # Make sure carrier is set
             if carrier:
                 sample_data['carrier'] = carrier
-                # Keep carrier info for later reference
                 if carrier_info:
                     sample_data['carrier_name'] = carrier_info['name']
                     sample_data['carrier_category'] = carrier_info.get('category', 'UNKNOWN')
             
             # Random Forest prediction
             try:
-                # Create feature vector
                 sample_X = pd.DataFrame([sample_data])
                 
-                # Predict fare
                 rf_predicted_fare = rf_model.predict(sample_X)[0]
                 print(f"RF prediction: ${rf_predicted_fare:.2f}")
             except Exception as e:
                 print(f"Error making Random Forest prediction: {str(e)}")
-                # Use the base fare if available, otherwise use a reasonable default
                 rf_predicted_fare = sample_data.get('fare', 180.0)
                 print(f"Using fallback fare: ${rf_predicted_fare:.2f}")
             
-            # Time Series prediction (if available)
             ts_predicted_fare = None
             combined_prediction = rf_predicted_fare
             
             if ts_model is not None:
                 try:
-                    # For time series, use the quarter or month index
+                    
                     if granularity == "quarter":
                         ts_idx = quarter - 1
                     elif granularity == "month":
@@ -591,23 +523,23 @@ def predict_best_time_to_buy_ticket(origin, destination, granularity="quarter",
                     elif granularity == "week":
                         ts_idx = min(week_number - 1, 51)  # Max 52 weeks
                     else:
-                        # For daily, use the day of year (scaled)
+
                         days_in_year = 366 if calendar.isleap(pred_date.year) else 365
                         ts_idx = int((sample_data['day_of_year'] / days_in_year) * 4)  # Scale to 0-3
                     
-                    # Get forecast for the appropriate period
+
                     max_steps = 52 if granularity == "week" else 12 if granularity == "month" else 4
                     forecasts = ts_model.forecast(steps=max_steps)
                     ts_predicted_fare = forecasts[min(ts_idx, len(forecasts)-1)]
                     print(f"TS prediction: ${ts_predicted_fare:.2f}")
                     
-                    # Combine predictions (weighted average)
+
                     combined_prediction = 0.7 * rf_predicted_fare + 0.3 * ts_predicted_fare
                     print(f"Combined prediction: ${combined_prediction:.2f}")
                 except Exception as e:
                     print(f"Error making time series prediction: {str(e)}")
             
-            # Apply holiday effect
+
             holiday_markup = 1.15 if is_holiday else 1.0  # 15% markup for holiday periods
             
             # Apply seasonality effect based on month
@@ -641,24 +573,17 @@ def predict_best_time_to_buy_ticket(origin, destination, granularity="quarter",
             
             dow_factor = dow_factors[pred_date.weekday()]
             
-            # Final prediction with all effects
             final_prediction = combined_prediction * holiday_markup * seasonal_factor * dow_factor
             print(f"Final prediction with all effects: ${final_prediction:.2f}")
             
-            # If we have a specific carrier, ensure the carrier effect is reflected
             if carrier and carrier_info:
-                # Apply specific carrier factor to the final prediction
                 carrier_adjusted_prediction = adjust_fare_by_carrier(final_prediction, carrier, route_name)
-                
-                # Only apply full adjustment if it wasn't already included in the base fare
-                # If the difference is large, use the carrier-adjusted prediction
-                # Otherwise, use the existing prediction (carrier effect already included)
+        
                 carrier_effect_ratio = carrier_adjusted_prediction / final_prediction
                 if abs(carrier_effect_ratio - 1.0) > 0.05:  # If more than 5% difference
                     print(f"Applying carrier effect: ${final_prediction:.2f} → ${carrier_adjusted_prediction:.2f}")
                     final_prediction = carrier_adjusted_prediction
-            
-            # Convert all numpy types to Python types
+
             prediction_entry = {
                 'date': pred_date,
                 'predicted_fare': float(final_prediction),
@@ -677,17 +602,14 @@ def predict_best_time_to_buy_ticket(origin, destination, granularity="quarter",
             
             predictions.append(prediction_entry)
         
-        # Convert to DataFrame for easier manipulation
         predictions_df = pd.DataFrame(predictions)
-        
-        # Filter predictions by travel period if specified
+
         filtered_predictions_df = predictions_df.copy()
         travel_period_filtered = False
         
         if start_month is not None and end_month is not None and granularity in ["month", "quarter"]:
             travel_period_filtered = True
             
-            # Helper function to check if a month is within travel period
             def is_in_travel_period(month):
                 if start_month <= end_month:
                     return start_month <= month <= end_month
@@ -702,7 +624,6 @@ def predict_best_time_to_buy_ticket(origin, destination, granularity="quarter",
                 start_quarter = (start_month - 1) // 3 + 1
                 end_quarter = (end_month - 1) // 3 + 1
                 
-                # Helper function to check if quarter is in travel period
                 def is_quarter_in_travel_period(quarter):
                     if start_quarter <= end_quarter:
                         return start_quarter <= quarter <= end_quarter
@@ -711,7 +632,6 @@ def predict_best_time_to_buy_ticket(origin, destination, granularity="quarter",
                 
                 filtered_predictions_df = predictions_df[predictions_df['quarter'].apply(is_quarter_in_travel_period)]
         
-        # If we filtered and have results, use the filtered data for best time determination
         if travel_period_filtered and not filtered_predictions_df.empty:
             active_df = filtered_predictions_df
         else:
@@ -723,7 +643,6 @@ def predict_best_time_to_buy_ticket(origin, destination, granularity="quarter",
             best_time_row = active_df.loc[best_idx]
             best_time = {k: convert_numpy_types(v) for k, v in best_time_row.to_dict().items()}
             
-            # Check if date is string and convert if needed
             if isinstance(best_time['date'], str):
                 date_obj = datetime.datetime.strptime(best_time['date'], '%Y-%m-%d').date()
                 formatted_best = f"{date_obj.strftime('%A, %B %d, %Y')}"
@@ -737,8 +656,6 @@ def predict_best_time_to_buy_ticket(origin, destination, granularity="quarter",
             best_week_data = active_df[active_df['week'] == best_week].iloc[0]
             best_time = {k: convert_numpy_types(v) for k, v in best_week_data.to_dict().items()}
             
-            # Get date range for the best week
-            # Convert date to datetime object if it's a string
             best_date = best_time['date']
             if isinstance(best_date, str):
                 best_date = datetime.datetime.strptime(best_date, '%Y-%m-%d').date()
@@ -747,7 +664,6 @@ def predict_best_time_to_buy_ticket(origin, destination, granularity="quarter",
             formatted_best = f"Week {best_week} ({start_of_week.strftime('%b %d')} - {end_of_week.strftime('%b %d')})"
             
         elif granularity == "month":
-            # Group by month
             monthly_avg = active_df.groupby(['month', 'month_name'])['predicted_fare'].mean().reset_index()
             best_month_idx = monthly_avg['predicted_fare'].idxmin()
             best_month = int(monthly_avg.loc[best_month_idx]['month'])
@@ -764,7 +680,6 @@ def predict_best_time_to_buy_ticket(origin, destination, granularity="quarter",
             formatted_best = f"{best_month_name}"
             
         elif granularity == "quarter":
-            # Group by quarter
             quarterly_avg = active_df.groupby('quarter')['predicted_fare'].mean().reset_index()
             best_quarter_idx = quarterly_avg['predicted_fare'].idxmin()
             best_quarter = int(quarterly_avg.loc[best_quarter_idx]['quarter'])
@@ -778,14 +693,11 @@ def predict_best_time_to_buy_ticket(origin, destination, granularity="quarter",
             }
             formatted_best = f"Q{best_quarter}"
         
-        # For visualization, use the filtered data if available
         viz_df = filtered_predictions_df if travel_period_filtered and not filtered_predictions_df.empty else predictions_df
         
-        # Instead of generating images, prepare chart data for React
         chart_data = {}
 
         if granularity == "date":
-            # Prepare daily chart data
             chart_data = {
                 'type': 'line',
                 'data': [
@@ -793,7 +705,7 @@ def predict_best_time_to_buy_ticket(origin, destination, granularity="quarter",
                         'date': pred['date'].isoformat() if not isinstance(pred['date'], str) else pred['date'],
                         'fare': round(pred['predicted_fare'], 2),
                         'isHoliday': pred['is_holiday_period'],
-                        'isBest': False  # Will mark the best date below
+                        'isBest': False 
                     }
                     for pred in viz_df.to_dict('records')
                 ],
@@ -804,27 +716,22 @@ def predict_best_time_to_buy_ticket(origin, destination, granularity="quarter",
                 'title': f'Predicted Fares for {route_name}'
             }
             
-            # Add carrier info to title if available
             if carrier and carrier_info:
                 chart_data['title'] += f' with {carrier} ({carrier_info["name"]})'
             
-            # Add travel period info to title if filtered
             if travel_period_filtered:
                 chart_data['title'] += f' (Travel Period: {months[start_month-1]} to {months[end_month-1]})'
             
-            # Mark the best date
             best_idx = viz_df['predicted_fare'].idxmin()
             best_date = viz_df.loc[best_idx, 'date']
             best_date_str = best_date.isoformat() if not isinstance(best_date, str) else best_date
             
-            # Find the best date in our chart data and mark it
             for point in chart_data['data']:
                 if point['date'] == best_date_str:
                     point['isBest'] = True
                     break
 
         elif granularity in ["week", "month", "quarter"]:
-            # Prepare bar chart data
             if granularity == "week":
                 # Group by week
                 grouped_data = viz_df.groupby('week')['predicted_fare'].mean().reset_index()
@@ -848,7 +755,6 @@ def predict_best_time_to_buy_ticket(origin, destination, granularity="quarter",
             best_idx = grouped_data['predicted_fare'].idxmin()
             best_value = grouped_data.loc[best_idx, label_key]
             
-            # Create chart data
             chart_data = {
                 'type': 'bar',
                 'data': [
@@ -868,54 +774,44 @@ def predict_best_time_to_buy_ticket(origin, destination, granularity="quarter",
                 'title': f'Predicted Fares for {route_name}'
             }
             
-            # Add carrier info to title if available
             if carrier and carrier_info:
                 chart_data['title'] += f' with {carrier} ({carrier_info["name"]})'
-            
-            # Add travel period info to title if filtered
+
             if travel_period_filtered:
                 chart_data['title'] += f' (Travel Period: {months[start_month-1]} to {months[end_month-1]})'
 
-        # Full analysis chart data
         full_analysis_chart_data = {}
 
         if travel_period_filtered and (granularity == "month" or granularity == "quarter"):
             if granularity == "month":
-                # Group by month using ALL predictions
                 full_grouped_data = predictions_df.groupby(['month', 'month_name'])['predicted_fare'].mean().reset_index()
                 full_grouped_data = full_grouped_data.sort_values('month')
                 label_key = 'month_name'
                 label_formatter = lambda x: x
                 
-                # Function to check if a month is in travel period
                 def is_in_travel_period(month):
                     if start_month <= end_month:
                         return start_month <= month <= end_month
-                    else:  # Wrap around case (e.g., November to February)
+                    else: 
                         return month >= start_month or month <= end_month
                 
-                # Find best month from filtered set
                 best_month = int(monthly_avg.loc[monthly_avg['predicted_fare'].idxmin()]['month'])
                 
             else:  # quarter
-                # Group by quarter using ALL predictions
                 full_grouped_data = predictions_df.groupby('quarter')['predicted_fare'].mean().reset_index()
                 label_key = 'quarter'
                 label_formatter = lambda x: f"Q{int(x)}"
-                
-                # Function to check if quarter is in travel period
+
                 def is_quarter_in_travel_period(quarter):
                     start_quarter = (start_month - 1) // 3 + 1
                     end_quarter = (end_month - 1) // 3 + 1
                     if start_quarter <= end_quarter:
                         return start_quarter <= quarter <= end_quarter
-                    else:  # Wrap around case
+                    else:
                         return quarter >= start_quarter or quarter <= end_quarter
-                
-                # Find best quarter from filtered set
+
                 best_quarter = int(quarterly_avg.loc[quarterly_avg['predicted_fare'].idxmin()]['quarter'])
             
-            # Create full analysis chart data
             full_analysis_chart_data = {
                 'type': 'bar',
                 'data': [],
@@ -926,18 +822,13 @@ def predict_best_time_to_buy_ticket(origin, destination, granularity="quarter",
                 'title': f'Full Year Price Analysis for {route_name}'
             }
             
-            # Add carrier info to title if available
             if carrier and carrier_info:
                 full_analysis_chart_data['title'] += f' with {carrier} ({carrier_info["name"]})'
             
-            # Add travel period info to title
             full_analysis_chart_data['title'] += f' (Travel Period: {months[start_month-1]} to {months[end_month-1]})'
-            
-            # Build data points
+
             for _, row in full_grouped_data.iterrows():
                 original_value = row[label_key]
-                
-                # Determine if in travel period and if best period
                 if granularity == "month":
                     in_travel_period = is_in_travel_period(row['month'])
                     is_best = row['month'] == best_month
@@ -953,20 +844,16 @@ def predict_best_time_to_buy_ticket(origin, destination, granularity="quarter",
                     'isBest': is_best
                 })
         else:
-            # If not filtered or not month/quarter, use the regular chart data
             full_analysis_chart_data = chart_data
         
-        # Convert the predictions list to ensure all numpy types are converted
         filtered_predictions = []
         for pred in active_df.to_dict('records'):
             filtered_predictions.append({k: convert_numpy_types(v) for k, v in pred.items()})
         
-        # All predictions (unfiltered) for comparison
         all_predictions = []
         for pred in predictions_df.to_dict('records'):
             all_predictions.append({k: convert_numpy_types(v) for k, v in pred.items()})
-        
-        # Create the result dictionary with all NumPy types converted
+
         result = {
             'route': route_name,
             'granularity': granularity,
@@ -1001,9 +888,7 @@ def predict_best_time_to_buy_ticket(origin, destination, granularity="quarter",
             'success': False
         }
 
-# Example usage
 if __name__ == "__main__":
-    # Show how to use each granularity option
     print("\n=== PREDICTING BY QUARTER ===")
     result_quarter = predict_best_time_to_buy_ticket('ABQ', 'PHX', granularity="quarter")
     
@@ -1022,7 +907,6 @@ if __name__ == "__main__":
     print("\n=== PREDICTING WITH SPECIFIC CARRIER ===")
     result_carrier = predict_best_time_to_buy_ticket('ABQ', 'PHX', granularity="month", carrier="WN")
 
-    # Test predictions with various carriers
     carriers_to_test = ['AA', 'DL', 'WN', 'F9', 'NK', 'G4']
     for test_carrier in carriers_to_test:
         print(f"\n=== TESTING WITH CARRIER: {test_carrier} ===")

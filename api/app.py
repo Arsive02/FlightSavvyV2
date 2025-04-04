@@ -1,15 +1,9 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import pandas as pd
-import numpy as np
-import joblib
-import datetime
-import os
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
 
-# Import your prediction function
 from prediction import predict_best_time_to_buy_ticket
 
 @app.route('/')
@@ -66,10 +60,8 @@ def predict():
     start_month = data.get('start_month')
     end_month = data.get('end_month')
     
-    # NEW: Add carrier parameter
     carrier = data.get('carrier')
     
-    # Convert month names to month numbers if provided
     if isinstance(start_month, str) and not start_month.isdigit():
         months = ['January', 'February', 'March', 'April', 'May', 'June',
                  'July', 'August', 'September', 'October', 'November', 'December']
@@ -86,7 +78,6 @@ def predict():
         except ValueError:
             pass
     
-    # Call prediction function
     try:
         result = predict_best_time_to_buy_ticket(
             origin=origin,
