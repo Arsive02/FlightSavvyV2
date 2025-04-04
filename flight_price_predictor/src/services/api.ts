@@ -1,5 +1,3 @@
-// src/services/api.ts
-
 interface PredictionParams {
     origin: string;
     destination: string;
@@ -8,7 +6,7 @@ interface PredictionParams {
     weeksAhead?: number;
   }
   
-  export const API_URL = 'http://localhost:5000/api';
+  export const API_URL = '/api';
   
   export const flightApi = {
     predictBestTime: async (params: PredictionParams) => {
