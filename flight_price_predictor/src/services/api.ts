@@ -6,7 +6,7 @@ interface PredictionParams {
     weeksAhead?: number;
   }
   
-  export const API_URL = 'https://flightsavvyv2.onrender.com/api';
+  export const API_URL = 'https://arsive-flight-fare-hf.hf.space/api';
   
   export const flightApi = {
     predictBestTime: async (params: PredictionParams) => {

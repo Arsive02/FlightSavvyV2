@@ -280,7 +280,7 @@ const predictBestTime = async (params: {
   carrier?: string;
 }) => {
   try {
-    const response = await fetch('https://flightsavvyv2.onrender.com/api/predict', {
+    const response = await fetch('https://arsive-flight-fare-hf.hf.space/api/predict', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

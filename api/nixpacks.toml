@@ -1,5 +1,0 @@
-[start]
-cmd = "gunicorn main:app"
-
-[phases.setup]
-pkgs = ["...", "python311"]
