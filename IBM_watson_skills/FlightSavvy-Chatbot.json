@@ -88,6 +88,9 @@
           "text": "I need the best deal on a flight"
         },
         {
+          "text": "i want to book a flight"
+        },
+        {
           "text": "I want to check for cheap flight ticket"
         },
         {
@@ -388,7 +391,7 @@
       "values": [
         {
           "type": "synonyms",
-          "value": "day",
+          "value": "date",
           "synonyms": [
             "by date",
             "by day",
