@@ -88,9 +88,6 @@
           "text": "I need the best deal on a flight"
         },
         {
-          "text": "i want to book a flight"
-        },
-        {
           "text": "I want to check for cheap flight ticket"
         },
         {
@@ -116,6 +113,30 @@
         }
       ],
       "description": "User wants to find the best time to book flights"
+    },
+    {
+      "intent": "general_qns",
+      "examples": [
+        {
+          "text": "Are we alone in the universe?"
+        },
+        {
+          "text": "Do you believe in fate?"
+        },
+        {
+          "text": "Do you think of sheep clones?"
+        },
+        {
+          "text": "What is the meaning of life?"
+        },
+        {
+          "text": "What's your favorite color?"
+        },
+        {
+          "text": "Why do planes fly?"
+        }
+      ],
+      "description": "User is asking a general, non-flight related question"
     },
     {
       "intent": "goodbye",
@@ -391,7 +412,7 @@
       "values": [
         {
           "type": "synonyms",
-          "value": "date",
+          "value": "day",
           "synonyms": [
             "by date",
             "by day",
@@ -822,7 +843,7 @@
       },
       "conditions": "anything_else",
       "dialog_node": "anything_else_node",
-      "previous_sibling": "goodbye_node"
+      "previous_sibling": "node_1_1743896566538"
     },
     {
       "type": "standard",
@@ -1174,6 +1195,36 @@
     },
     {
       "type": "standard",
+      "title": "General Out of Context Questions",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Ah, the big questions! I'm more of a flight expert, shall we get back to planning a trip?"
+              },
+              {
+                "text": "That’s a great question! I’m built for flight planning, but if you’re pondering life’s big mysteries… maybe a trip would help clear it. "
+              },
+              {
+                "text": "I'd love to help, but I'm better with airport codes than existential crises."
+              },
+              {
+                "text": "I don’t know the answer to that, but I do know when flights to Paris are cheapest"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "random"
+          }
+        ]
+      },
+      "conditions": "#general_qns",
+      "digress_in": "does_not_return",
+      "dialog_node": "node_1_1743896566538",
+      "previous_sibling": "goodbye_node"
+    },
+    {
+      "type": "standard",
       "title": "Process Prediction Request",
       "output": {
         "generic": [
@@ -1369,5 +1420,5 @@
   "learning_opt_out": false,
   "language": "en",
   "description": "A travel assistant chatbot that helps users find the best time to book flights",
-  "name": "FlightSavvy-Chatbot"
+  "name": "Plane Ticket Booking-dialog"
 }
